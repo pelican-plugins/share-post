@@ -1,100 +1,125 @@
 """
-Share Post plugin.
+Share Post
+==========
 
-This plugin adds share URL to article. These links are textual which means no
-online tracking of your readers.
+This plugin was originally created by
+Talha Mansoor <talha131@gmail.com>
+
+This plugin adds social share URLs to each article.
 """
+
+# If you want to add a new link_processor please
+# have a look at the create_link decorator and
+# follow the example of the other functions
+
+from urllib.parse import quote
 
 from bs4 import BeautifulSoup
 
 from pelican import contents, signals
 from pelican.generators import ArticlesGenerator, PagesGenerator
 
-try:
-    from urllib.parse import quote
-except ImportError:
-    from urllib import quote
+_create_link_functions = []
 
 
-def article_title(content):
-    main_title = BeautifulSoup(content.title, 'html.parser').get_text().strip()
-    sub_title = ''
-    if hasattr(content, 'subtitle'):
-        sub_title = ' ' + BeautifulSoup(content.subtitle, 'html.parser').get_text().strip()  # noqa
-    return quote(('%s%s' % (main_title, sub_title)).encode('utf-8'))
+# Use this decorator to mark a function as
+# a link creator. The function's prototype shall be
+# create_link_NAME(title, url, content)
+# where
+#   NAME is the name of the target, e.g. "dispora" or "facebook"
+#   title is the HTML-safe title of the content
+#   url is the content URL
+#   content is the full object, should you need to extract more data.
+def create_link(f):
+    _create_link_functions.append(f)
+    return f
 
 
-def article_url(content):
-    site_url = content.settings['SITEURL']
-    return quote(('%s/%s' % (site_url, content.url)).encode('utf-8'))
+@create_link
+def create_link_email(title, url, content):
+    return f"mailto:?subject={title}&amp;body={url}"
 
 
-def article_summary(content):
-    return quote(BeautifulSoup(content.summary, 'html.parser').get_text().strip().encode('utf-8'))  # noqa
+@create_link
+def create_link_hacker_news(title, url, content):
+    return f"https://news.ycombinator.com/submitlink?t={title}&u={url}"
 
 
-def twitter_hastags(content):
-    tags = getattr(content, 'tags', [])
-    hashtags = ','.join((tag.slug for tag in tags))
-    return '' if not hashtags else '&hashtags=%s' % hashtags
+@create_link
+def create_link_diaspora(title, url, content):
+    return f"https://sharetodiaspora.github.io/?title={title}&url={url}"
 
 
-def twitter_via(content):
-    twitter_username = content.settings.get('TWITTER_USERNAME', '')
-    return '' if not twitter_username else '&via=%s' % twitter_username
+@create_link
+def create_link_facebook(title, url, content):
+    return f"https://www.facebook.com/sharer/sharer.php?u={url}"
 
 
-def share_post(content):
+@create_link
+def create_link_twitter(title, url, content):
+    twitter_username = content.settings.get("TWITTER_USERNAME", "")
+    via = f"&via={twitter_username}" if twitter_username else ""
+
+    tags = getattr(content, "tags", [])
+    tags = ",".join([tag.slug for tag in tags])
+    hashtags = f"&hashtags={tags}" if tags else ""
+
+    return f"https://twitter.com/intent/tweet?text={title}&url={url}{via}{hashtags}"
+
+
+@create_link
+def create_link_reddit(title, url, content):
+    return f"https://www.reddit.com/submit?url={url}&title={title}"
+
+
+@create_link
+def create_link_linkedin(title, url, content):
+    summary = quote(
+        BeautifulSoup(content.summary, "html.parser").get_text().strip().encode("utf-8")
+    )
+
+    return (
+        f"https://www.linkedin.com/shareArticle?"
+        f"mini=true&url={url}&title={title}&"
+        f"summary={summary}&source={url}"
+    )
+
+
+def create_share_links(content):
     if isinstance(content, contents.Static):
         return
 
-    title = article_title(content)
-    url = article_url(content)
-    summary = article_summary(content)
-    hastags = twitter_hastags(content)
-    via = twitter_via(content)
+    main_title = BeautifulSoup(content.title, "html.parser").get_text().strip()
 
-    mail_link = 'mailto:?subject=%s&amp;body=%s' % (title, url)
-    diaspora_link = 'https://sharetodiaspora.github.io/?title=%s&url=%s' % (
-        title, url)
-    facebook_link = 'https://www.facebook.com/sharer/sharer.php?u=%s' % url
-    twitter_link = 'https://twitter.com/intent/tweet?text=%s&url=%s%s%s' % (
-        title, url, via, hastags)
-    hackernews_link = 'https://news.ycombinator.com/submitlink?t=%s&u=%s' % (
-        title, url)
-    linkedin_link = 'https://www.linkedin.com/shareArticle?mini=true&url=%s&title=%s&summary=%s&source=%s' % (  # noqa
-        url, title, summary, url
-    )
-    reddit_link = 'https://www.reddit.com/submit?url=%s&title=%s' % (
-        url, title)
+    try:
+        sub_title = (
+            " " + BeautifulSoup(content.subtitle, "html.parser").get_text().strip()
+        )
+    except AttributeError:
+        sub_title = ""
 
-    content.share_post = {
-        'diaspora': diaspora_link,
-        'twitter': twitter_link,
-        'facebook': facebook_link,
-        'linkedin': linkedin_link,
-        'hacker-news': hackernews_link,
-        'email': mail_link,
-        'reddit': reddit_link,
-    }
+    title = quote(f"{main_title}{sub_title}".encode("utf-8"))
+
+    site_url = content.settings["SITEURL"]
+    url = quote(f"{site_url}/{content.url}".encode("utf-8"))
+
+    content.share_post = {}
+    for func in _create_link_functions:
+        key = func.__name__.replace("create_link_", "").replace("_", "-")
+        content.share_post[key] = func(title, url, content)
 
 
 def run_plugin(generators):
     for generator in generators:
         if isinstance(generator, ArticlesGenerator):
             for article in generator.articles:
-                share_post(article)
+                create_share_links(article)
                 for translation in article.translations:
-                    share_post(translation)
+                    create_share_links(translation)
         elif isinstance(generator, PagesGenerator):
             for page in generator.pages:
-                share_post(page)
+                create_share_links(page)
 
 
 def register():
-    try:
-        signals.all_generators_finalized.connect(run_plugin)
-    except AttributeError:
-        # NOTE: This results in #314 so shouldn't really be relied on
-        # https://github.com/getpelican/pelican-plugins/issues/314
-        signals.content_object_init.connect(share_post)
+    signals.all_generators_finalized.connect(run_plugin)

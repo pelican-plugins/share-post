@@ -1,75 +1,86 @@
-# Share Post
+# Share Post: A Plugin for Pelican
 
-A Pelican plugin to create share URLs of article
+[![Build Status](https://img.shields.io/github/workflow/status/pelican-plugins/share-post/build)](https://github.com/pelican-plugins/share-post/actions)
+[![PyPI Version](https://img.shields.io/pypi/v/pelican-share-post)](https://pypi.org/project/pelican-share-post/)
+![License](https://img.shields.io/pypi/l/pelican-share-post?color=blue)
 
-# Author
+Share Post is a Pelican plugin that creates share links in articles that allow site visitors to share the current article with others in a privacy-friendly manner.
 
-Copyright (c) Talha Mansoor
+Many web sites have share widgets to let readers share posts on social networks. Most of these widgets are used by vendors for online tracking. These widgets can also be visually-distracting and negatively affect readers’ attention.
 
-Author          | Talha Mansoor
-----------------|-----
-Author Email    | talha131@gmail.com
-Author Homepage | http://onCrashReboot.com
-Github Account  | https://github.com/talha131
+Share Post creates old-school URLs for some popular sites which your theme can use. These links do not have the ability to track site visitors. They can also be unobtrusive depending on how Pelican theme uses them.
 
-### Contributors
 
-* [Jonathan DEKHTIAR](https://github.com/DEKHTIARJonathan) - contact@jonathandekhtiar.eu
-* [Paolo Melchiorre](https://github.com/pauloxnet) - [www.paulox.net](https://www.paulox.net/)
+Installation
+------------
 
-## Why do you need it?
+This plugin can be installed via:
 
-Almost all website have share widgets to let readers share posts on social
-networks. Most of these widgets are used by vendors for online tracking. These
-widgets are also visual which quite often become a distraction and negatively
-affect readers attention.
+    python -m pip install pelican-share-post
 
-`share_post` creates old school URLs for some popular sites which your theme
-can use. These links do not have the ability to track the users. They can also
-be unobtrusive depending on how Pelican theme uses them.
+Usage
+-----
 
-## Requirements
+This plugin adds to each Pelican article a dictionary of URLs that, when followed, allows the reader to easily share the article via specific channels. When activated, the plugin adds the attribute `share_post` to each article with the following format:
 
-`share_post` requires BeautifulSoup
-
-```bash
-pip install beautifulsoup4
+``` python
+article.share_post = {
+	"facebook": "<URL>",
+	"email": "<URL>",
+	"twitter": "<URL>",
+	"diaspora": "<URL>",
+	"linkedin": "<URL>",
+	"hacker-news": "<URL>",
+	"reddit": "<URL>",
+}
 ```
 
-## How to Use
+You can then access those variables in your template. For example:
 
-`share_post` adds a dictionary attribute to `article` which can be accessed via
-`article.share_post`. Keys of the dictionary are as follows,
-
-1. `facebook`
-1. `email`
-1. `twitter`
-1. `diaspora`
-1. `linkedin`
-1. `hacker-news`
-1. `reddit`
-
-## Template Example
-
-```html
+``` html+jinja
 {% if article.share_post and article.status != 'draft' %}
 <section>
   <p id="post-share-links">
     Share on:
-    <a href="{{article.share_post['diaspora']}}" target="_blank" title="Share on Diaspora">Diaspora*</a>
+    <a href="{{article.share_post['diaspora']}}" title="Share on Diaspora">Diaspora*</a>
     ❄
-    <a href="{{article.share_post['twitter']}}" target="_blank" title="Share on Twitter">Twitter</a>
+    <a href="{{article.share_post['twitter']}}" title="Share on Twitter">Twitter</a>
     ❄
-    <a href="{{article.share_post['facebook']}}" target="_blank" title="Share on Facebook">Facebook</a>
+    <a href="{{article.share_post['facebook']}}" title="Share on Facebook">Facebook</a>
     ❄
-    <a href="{{article.share_post['linkedin']}}" target="_blank" title="Share on LinkedIn">LinkedIn</a>
+    <a href="{{article.share_post['linkedin']}}" title="Share on LinkedIn">LinkedIn</a>
     ❄
-    <a href="{{article.share_post['hacker-news']}}" target="_blank" title="Share on HackerNews">HackerNews</a>
+    <a href="{{article.share_post['hacker-news']}}" title="Share on HackerNews">HackerNews</a>
     ❄
-    <a href="{{article.share_post['email']}}" target="_blank" title="Share via Email">Email</a>
+    <a href="{{article.share_post['email']}}" title="Share via Email">Email</a>
     ❄
-    <a href="{{article.share_post['reddit']}}" target="_blank" title="Share via Reddit">Reddit</a>
+    <a href="{{article.share_post['reddit']}}" title="Share via Reddit">Reddit</a>
   </p>
 </section>
 {% endif %}
 ```
+
+Contributing
+------------
+
+Contributions are welcome and much appreciated. Every little bit helps. You can contribute by improving the documentation, adding missing features, and fixing bugs. You can also help out by reviewing and commenting on [existing issues][].
+
+To start contributing to this plugin, review the [Contributing to Pelican][] documentation, beginning with the **Contributing Code** section.
+
+[existing issues]: https://github.com/pelican-plugins/share-post/issues
+[Contributing to Pelican]: https://docs.getpelican.com/en/latest/contribute.html
+
+
+Contributors
+------------
+
+* [Talha Mansoor](https://www.oncrashreboot.com) - talha131@gmail.com
+* [Jonathan DEKHTIAR](https://github.com/DEKHTIARJonathan) - contact@jonathandekhtiar.eu
+* [Justin Mayer](https://justinmayer.com)
+* [Leonardo Giordani](https://www.thedigitalcatonline.com)
+
+
+License
+-------
+
+This project is licensed under the MIT license.
