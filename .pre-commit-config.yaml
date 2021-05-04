@@ -1,3 +1,4 @@
+---
 # See https://pre-commit.com/hooks.html for info on hooks
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
@@ -6,11 +7,13 @@ repos:
       - id: check-added-large-files
       - id: check-ast
       - id: check-case-conflict
+      - id: check-merge-conflict
       - id: check-toml
       - id: check-yaml
       - id: debug-statements
       - id: detect-private-key
       - id: end-of-file-fixer
+      - id: forbid-new-submodules
       - id: trailing-whitespace
 
   - repo: https://github.com/psf/black
