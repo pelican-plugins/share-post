@@ -54,6 +54,13 @@ def create_link_diaspora(title, url, content):
 def create_link_facebook(title, url, content):
     return f"https://www.facebook.com/sharer/sharer.php?u={url}"
 
+@create_link
+def create_link_mastodon(title, url, content):
+    tags = getattr(content, "tags", [])
+    tags = ", ".join([tag.slug for tag in tags])
+    hashtags = f"&hashtags={tags}" if tags else ""
+    return f"https://toot.kytta.dev/?text={title}&url={url}{hashtags}"
+
 
 @create_link
 def create_link_twitter(title, url, content):
