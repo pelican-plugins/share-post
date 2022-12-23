@@ -56,6 +56,14 @@ def create_link_facebook(title, url, content):
 
 
 @create_link
+def create_link_mastodon(title, url, content):
+    tags = getattr(content, "tags", [])
+    tags = ", ".join([tag.slug for tag in tags])
+    hashtags = f"&hashtags={tags}" if tags else ""
+    return f"https://toot.kytta.dev/?text={title}&url={url}{hashtags}"
+
+
+@create_link
 def create_link_twitter(title, url, content):
     twitter_username = content.settings.get("TWITTER_USERNAME", "")
     via = f"&via={twitter_username}" if twitter_username else ""
