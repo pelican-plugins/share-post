@@ -34,7 +34,7 @@ markdown = {version = ">=3.2.2", optional = true}
 beautifulsoup4 = "^4.9.3"
 
 [tool.poetry.dev-dependencies]
-black = {version = "^21.4b2", allow-prereleases = true}
+black = {version = ">=22.3.0", allow-prereleases = true}
 flake8 = "^3.9"
 flake8-black = "^0.2.0"
 invoke = "^1.3"
