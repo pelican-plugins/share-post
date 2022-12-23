@@ -77,7 +77,8 @@ Contributors
 * [Talha Mansoor](https://www.oncrashreboot.com) - talha131@gmail.com
 * [Jonathan DEKHTIAR](https://github.com/DEKHTIARJonathan) - contact@jonathandekhtiar.eu
 * [Justin Mayer](https://justinmayer.com)
-* [Leonardo Giordani](https://www.thedigitalcatonline.com)
+* [Leonardo Giordani](https://github.com/lgiordani)
+* [Maurizio Paglia](https://github.com/mpaglia0)
 
 
 License
