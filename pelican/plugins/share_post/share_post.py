@@ -57,15 +57,15 @@ def create_link_facebook(title, url, content):
 
 @create_link
 def create_link_mastodon(title, url, content):
-    if hasattr(content, 'tags'):
+    if hasattr(content, "tags"):
         taglist = content.tags
         new_taglist = []
         for i in taglist:
-            new_taglist.append('#' + str(i))
-            hashtags = ' '.join(str(x).replace(" ", "") for x in new_taglist)
+            new_taglist.append("#" + str(i))
+            hashtags = " ".join(str(x).replace(" ", "") for x in new_taglist)
     else:
-        hashtags = ''
-    
+        hashtags = ""
+
     return f"https://toot.kytta.dev/?text={title}{newline}{url}{newline}{hashtags}"
 
 
