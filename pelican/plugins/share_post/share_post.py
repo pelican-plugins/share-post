@@ -21,7 +21,7 @@ from pelican.generators import ArticlesGenerator, PagesGenerator
 
 _create_link_functions = []
 
-newline = '%0D%0A'
+newline = "%0D%0A"
 
 
 # Use this decorator to mark a function as
