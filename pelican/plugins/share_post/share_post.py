@@ -63,7 +63,7 @@ def create_link_mastodon(title, url, content):
         taglist = content.tags
         new_taglist = []
         for i in taglist:
-            new_taglist.append("#" + str(i))
+            new_taglist.append("%23" + str(i))
             hashtags = " ".join(str(x).replace(" ", "") for x in new_taglist)
     else:
         hashtags = ""
