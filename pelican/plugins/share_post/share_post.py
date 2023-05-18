@@ -59,16 +59,13 @@ def create_link_facebook(title, url, content):
 
 @create_link
 def create_link_mastodon(title, url, content):
-    if hasattr(content, "tags"):
-        taglist = content.tags
-        new_taglist = []
-        for i in taglist:
-            new_taglist.append("%23" + str(i))
-            hashtags = " ".join(str(x).replace(" ", "") for x in new_taglist)
-    else:
-        hashtags = ""
+   hashtags = ""
 
-    return f"https://toot.kytta.dev/?text={title}{newline}{url}{newline}{hashtags}"
+   if hasattr(content, "tags"):
+      new_taglist = [f"%23{str(i).replace(' ', '')}" for i in content.tags]
+      hashtags = " ".join(new_taglist)
+
+   return f"https://toot.kytta.dev/?text={title}{newline}{url}{newline}{hashtags}"
 
 
 @create_link
