@@ -21,6 +21,8 @@ from pelican.generators import ArticlesGenerator, PagesGenerator
 
 _create_link_functions = []
 
+newline = "%0D%0A"
+
 
 # Use this decorator to mark a function as
 # a link creator. The function's prototype shall be
@@ -57,10 +59,13 @@ def create_link_facebook(title, url, content):
 
 @create_link
 def create_link_mastodon(title, url, content):
-    tags = getattr(content, "tags", [])
-    tags = ", ".join([tag.slug for tag in tags])
-    hashtags = f"&hashtags={tags}" if tags else ""
-    return f"https://toot.kytta.dev/?text={title}&url={url}{hashtags}"
+    hashtags = ""
+
+    if hasattr(content, "tags"):
+        new_taglist = [f"%23{str(i).replace(' ', '')}" for i in content.tags]
+        hashtags = " ".join(new_taglist)
+
+    return f"https://toot.kytta.dev/?text={title}{newline}{url}{newline}{hashtags}"
 
 
 @create_link
