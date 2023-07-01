@@ -1,6 +1,6 @@
 # Share Post: A Plugin for Pelican
 
-[![Build Status](https://img.shields.io/github/workflow/status/pelican-plugins/share-post/build)](https://github.com/pelican-plugins/share-post/actions)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/pelican-plugins/share-post/main.yml?branch=main)](https://github.com/pelican-plugins/share-post/actions)
 [![PyPI Version](https://img.shields.io/pypi/v/pelican-share-post)](https://pypi.org/project/pelican-share-post/)
 ![License](https://img.shields.io/pypi/l/pelican-share-post?color=blue)
 
