@@ -23,38 +23,41 @@ Usage
 
 This plugin adds to each Pelican article a dictionary of URLs that, when followed, allows the reader to easily share the article via specific channels. When activated, the plugin adds the attribute `share_post` to each article with the following format:
 
-``` python
+```python
 article.share_post = {
-	"facebook": "<URL>",
 	"email": "<URL>",
-	"twitter": "<URL>",
 	"diaspora": "<URL>",
-	"linkedin": "<URL>",
+	"facebook": "<URL>",
 	"hacker-news": "<URL>",
+	"linkedin": "<URL>",
+	"mastodon": "<URL>",
 	"reddit": "<URL>",
+	"twitter": "<URL>",
 }
 ```
 
 You can then access those variables in your template. For example:
 
-``` html+jinja
+```html+jinja
 {% if article.share_post and article.status != 'draft' %}
 <section>
   <p id="post-share-links">
     Share on:
-    <a href="{{article.share_post['diaspora']}}" title="Share on Diaspora">Diaspora*</a>
+    <a href="{{article.share_post['email']}}" title="Share via Email">Email</a>
     ❄
-    <a href="{{article.share_post['twitter']}}" title="Share on Twitter">Twitter</a>
+    <a href="{{article.share_post['diaspora']}}" title="Share on Diaspora">Diaspora</a>
     ❄
     <a href="{{article.share_post['facebook']}}" title="Share on Facebook">Facebook</a>
     ❄
+    <a href="{{article.share_post['hacker-news']}}" title="Share on Hacker News">Hacker News</a>
+    ❄
     <a href="{{article.share_post['linkedin']}}" title="Share on LinkedIn">LinkedIn</a>
     ❄
-    <a href="{{article.share_post['hacker-news']}}" title="Share on HackerNews">HackerNews</a>
-    ❄
-    <a href="{{article.share_post['email']}}" title="Share via Email">Email</a>
+    <a href="{{article.share_post['mastodon]}}" title="Share on Mastodon">Mastodon</a>
     ❄
     <a href="{{article.share_post['reddit']}}" title="Share via Reddit">Reddit</a>
+    ❄
+    <a href="{{article.share_post['twitter']}}" title="Share on Twitter">Twitter</a>
   </p>
 </section>
 {% endif %}
