@@ -53,7 +53,7 @@ You can then access those variables in your template. For example:
     ❄
     <a href="{{article.share_post['linkedin']}}" title="Share on LinkedIn">LinkedIn</a>
     ❄
-    <a href="{{article.share_post['mastodon]}}" title="Share on Mastodon">Mastodon</a>
+    <a href="{{article.share_post['mastodon']}}" title="Share on Mastodon">Mastodon</a>
     ❄
     <a href="{{article.share_post['reddit']}}" title="Share via Reddit">Reddit</a>
     ❄
