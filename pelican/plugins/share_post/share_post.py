@@ -1,6 +1,4 @@
-"""
-Share Post
-==========
+"""Share Post plugin for Pelican.
 
 This plugin was originally created by
 Talha Mansoor <talha131@gmail.com>
@@ -111,10 +109,10 @@ def create_share_links(content):
     except AttributeError:
         sub_title = ""
 
-    title = quote(f"{main_title}{sub_title}".encode("utf-8"))
+    title = quote(f"{main_title}{sub_title}".encode())
 
     site_url = content.settings["SITEURL"]
-    url = quote(f"{site_url}/{content.url}".encode("utf-8"))
+    url = quote(f"{site_url}/{content.url}".encode())
 
     content.share_post = {}
     for func in _create_link_functions:
