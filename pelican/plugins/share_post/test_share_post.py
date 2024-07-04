@@ -1,7 +1,5 @@
 import os
 
-from share_post import run_plugin
-
 from pelican.generators import ArticlesGenerator
 from pelican.tests.support import get_context, get_settings
 
@@ -26,7 +24,7 @@ def test_share_post(tmp_folder):
     )
     generator.generate_context()
 
-    run_plugin([generator])
+    share_post.run_plugin([generator])
 
     share_links = generator.articles[0].share_post
 

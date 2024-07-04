@@ -2,6 +2,7 @@
 
 [![Build Status](https://img.shields.io/github/actions/workflow/status/pelican-plugins/share-post/main.yml?branch=main)](https://github.com/pelican-plugins/share-post/actions)
 [![PyPI Version](https://img.shields.io/pypi/v/pelican-share-post)](https://pypi.org/project/pelican-share-post/)
+[![Downloads](https://img.shields.io/pypi/dm/pelican-share-post)](https://pypi.org/project/pelican-share-post/)
 ![License](https://img.shields.io/pypi/l/pelican-share-post?color=blue)
 
 Share Post is a Pelican plugin that creates share links in articles that allow site visitors to share the current article with others in a privacy-friendly manner.
@@ -17,6 +18,8 @@ Installation
 This plugin can be installed via:
 
     python -m pip install pelican-share-post
+
+As long as you have not explicitly added a `PLUGINS` setting to your Pelican settings file, then the newly-installed plugin should be automatically detected and enabled. Otherwise, you must add `share_post` to your existing `PLUGINS` list. For more information, please see the [How to Use Plugins](https://docs.getpelican.com/en/latest/plugins.html#how-to-use-plugins) documentation.
 
 Usage
 -----
