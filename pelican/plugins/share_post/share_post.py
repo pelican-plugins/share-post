@@ -13,9 +13,9 @@ This plugin adds social share URLs to each article.
 from urllib.parse import quote
 
 from bs4 import BeautifulSoup
+from pelican.generators import ArticlesGenerator, PagesGenerator
 
 from pelican import contents, signals
-from pelican.generators import ArticlesGenerator, PagesGenerator
 
 _create_link_functions = []
 
@@ -94,6 +94,12 @@ def create_link_linkedin(title, url, content):
         f"mini=true&url={url}&title={title}&"
         f"summary={summary}&source={url}"
     )
+
+
+@create_link
+def create_link_bluesky(title, url, content):
+    # https://docs.bsky.app/docs/advanced-guides/intent-links
+    return f"https://bsky.app/intent/compose?text={url}"
 
 
 def create_share_links(content):
