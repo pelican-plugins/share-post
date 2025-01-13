@@ -13,9 +13,9 @@ This plugin adds social share URLs to each article.
 from urllib.parse import quote
 
 from bs4 import BeautifulSoup
-from pelican.generators import ArticlesGenerator, PagesGenerator
 
 from pelican import contents, signals
+from pelican.generators import ArticlesGenerator, PagesGenerator
 
 _create_link_functions = []
 
