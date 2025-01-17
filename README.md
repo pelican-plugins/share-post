@@ -36,6 +36,7 @@ article.share_post = {
 	"mastodon": "<URL>",
 	"reddit": "<URL>",
 	"twitter": "<URL>",
+	"bluesky": "<URL>",
 }
 ```
 
@@ -61,6 +62,8 @@ You can then access those variables in your template. For example:
     <a href="{{article.share_post['reddit']}}" title="Share via Reddit">Reddit</a>
     ❄
     <a href="{{article.share_post['twitter']}}" title="Share on Twitter">Twitter</a>
+    ❄
+    <a href="{{article.share_post['bluesky']}}" title="Share on Bluesky">Bluesky</a>
   </p>
 </section>
 {% endif %}

@@ -96,6 +96,12 @@ def create_link_linkedin(title, url, content):
     )
 
 
+@create_link
+def create_link_bluesky(title, url, content):
+    # https://docs.bsky.app/docs/advanced-guides/intent-links
+    return f"https://bsky.app/intent/compose?text={url}"
+
+
 def create_share_links(content):
     if isinstance(content, contents.Static):
         return
