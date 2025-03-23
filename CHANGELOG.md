@@ -1,6 +1,14 @@
 CHANGELOG
 =========
 
+1.2.1 - 2025-03-23
+------------------
+
+Add title to Bluesky
+
+Contributed by [Daniel Lemos](https://github.com/xspager) via [PR #34](https://github.com/pelican-plugins/share-post/pull/34/)
+
+
 1.2.0 - 2025-01-29
 ------------------
 
