@@ -99,7 +99,7 @@ def create_link_linkedin(title, url, content):
 @create_link
 def create_link_bluesky(title, url, content):
     # https://docs.bsky.app/docs/advanced-guides/intent-links
-    return f"https://bsky.app/intent/compose?text={url}"
+    return f"https://bsky.app/intent/compose?text={title}%20{url}"
 
 
 def create_share_links(content):
