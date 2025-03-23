@@ -61,3 +61,7 @@ def test_share_post(tmp_folder):
         share_links["reddit"]
         == "https://www.reddit.com/submit?url=/test-post.html&title=Test%20post"
     )
+
+    assert (
+        share_links["bluesky"] == "https://bsky.app/intent/compose?text=Test%20post%20/test-post.html"
+    )
